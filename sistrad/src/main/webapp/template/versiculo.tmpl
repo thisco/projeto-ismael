@@ -1,0 +1,17 @@
+<script type="text/template" id="versiculo-tmpl">
+<% var addHeader = true;
+_.each(versiculos, function(versiculo) { 
+    if ( Modernizr.mq( "only all and (max-width: 640px)" ) ) {
+        addHeader = true;
+    }
+    %>
+	
+						<a href="traducao?id=<%=versiculo.id%>">
+							<p class="verso" id="verso<%=versiculo.numero%>">
+								<sup><%=versiculo.numero%></sup> 
+								<%=versiculo.texto%>
+							</p>
+						</a>
+<% addHeader = false;
+}); %>
+</script>

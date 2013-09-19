@@ -1,0 +1,26 @@
+<script type="text/template" id="menu-tmpl">
+<% var addHeader = true;
+_.each(livros, function(livro) { 
+    if ( Modernizr.mq( "only all and (max-width: 640px)" ) ) {
+        addHeader = true;
+    }
+    %>
+	
+			<li>
+				<a href="#"><%=livro.nome%></a>
+				<ul>
+				<%
+						_.each(livro.capitulos, function(capitulo) { 
+   				 %>
+					
+					<li><a href="capitulo?nomeLivro=<%=livro.nome%>&numeroCapitulo=<%=capitulo.numero%>"><%=capitulo.numero%></a></li>
+				
+				<% });%>	
+				</ul>
+			</li>
+					
+	
+<% addHeader = false;
+}); %>	
+			
+</script>

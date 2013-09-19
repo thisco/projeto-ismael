@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Projeto Ismael</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<!-- Set the tab, home page, shortcut icons -->
+<link rel="Shortcut Icon" href="images/favicon.ico">
+<link rel="apple-touch-icon" href="images/icon_small.png" />
+
+<!-- For minification, comment out this link -->
+<!-- Shared styles -->
+<link rel="stylesheet" href="css/screen.css" />
+
+<!-- Set viewport scaling and zoom features -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript" src="js/libs/modernizr-2.5.3.min.js"></script>
+
+<script type="text/javascript">
+        Modernizr.load([{
+            //Load CDN hosted jQuery or fall back to local file.
+            /*--------Note-----------
+            This approach should only be used if you trust the source of where the resource (JavaScript) is located.
+            In this case, use of the jquery CDN is much faster if your user's browser already has this file cached.
+            If they don't have it cached, try to load it from the CDN as this will be faster if the user is
+            located closer to a CDN than you currently hosted server.
+            */
+            load: [
+                "http://code.jquery.com/jquery-1.7.1.min.js",
+                "js/libs/underscore-min.js",
+                // Minification - See Readme for details
+                // For minification, comment out this file
+                "js/app.js"
+                // For minification, uncomment this file
+                // "js/app.min.js"
+            ],
+            complete: function() {
+                if ( !window.jQuery ) {
+                    //In production, you would want to fall back to a minified file.
+                    //We fall back to the full version because Eclipse reports false errors in some minified JavaScript files.
+                    yepnope( "js/libs/jquery-1.7.1.min.js" );
+                }
+            }
+        },{
+            //device detection and asynchronous script loading
+            /*--------Note-----------
+            Here we're using the yepnope framework which gives us the ability to load scripts dynamically, based on
+            Modernizr's results.
+            With Modernizr, we use media queries and touch detection to see if we are on a mobile, touch based device
+            or if we're at anything less than 480px.. this gives us a mobile ui on desktop browsers when resized to <480px
+            width for testing.
+            */
+            test: Modernizr.mq( "only all and (max-width: 640px)" ),
+            yep: {
+                //assign labeled callbacks for later execution after script loads.
+                //we are on mobile device so load appropriate CSS
+                "jqmcss": "css/jquery.mobile-1.1.0.min.css",
+                // For minification, uncomment this line
+                //"mcss": "css/m.screen.min.css"
+                // For minification, comment out this line
+                "mcss": "css/m.screen.css"
+            },
+            nope: {
+                //we are on desktop
+                // For minification, uncomment this line
+                //"scss": "css/d.screen.min.css"
+                // For minification, comment out this line
+            	"scss": "css/d.screen.css"
+            },
+            callback: {
+                //use the labeled callbacks from above, and load jQuery Mobile
+                "jqmcss": function( url, result, key ) {
+                    yepnope({
+                        load: "http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js",
+                        complete: function() {
+                            if ( !$.mobile ) {
+                                yepnope.injectJs( "js/libs/jquery.mobile-1.1.0.min.js" );
+                            }
+                        }
+                    });
+                },
+                "scss": function( url, result, key ) {
+                    $( document ).ready( function() {
+                        //here we are moving content around based on the browser/device.
+                        $( "aside" ).insertAfter( $( "section" ) );
+                    });
+                }
+            },
+            complete: function() {
+                $( document ).ready( function() {
+                    //setup the app after all scripts have loaded
+					carregarMenu();
+
+                    $( "#container" ).show();
+                    //Fetches the initial member data and populates the table using jquery templates
+               
+                });
+
+                $.fn.serializeObject = function() {
+                    var o = {};
+                    var a = this.serializeArray();
+                    $.each(a, function() {
+                        if (o[this.name]) {
+                            if (!o[this.name].push) {
+                                o[this.name] = [o[this.name]];
+                            }
+                            o[this.name].push(this.value || '');
+                        } else {
+                            o[this.name] = this.value || '';
+                        }
+                    });
+                    return o;
+                };
+            }
+        }]);
+
+        function abrefecha(obj){
+        	var el = document.getElementById(obj);
+        	if(el.style.display != "block"){
+        		el.style.display = "block";
+        	}else{
+        		el.style.display = "none";
+        	}
+        }
+        
+    </script>
+</head>
+<body>
+
+	<div id="container" style="display: none">
+
+		<div class="banner">
+			<div class="logo">
+				<img src="images/icon_small.png">
+				<h1>Tradução</h1>
+			</div>
+		</div>
+
+		<div id="menu"></div>
+
+		<section>
+
+			<!-- New HTML5 article tag -->
+			<article id="register-art" data-role="page" data-theme="a">
+				<!-- Header -->
+				<div data-role="header" class="header">
+					<img class="header_logo" src="images/favicon.ico" />
+					<h3>Tradução do Evangelho</h3>
+					<a href="#info-aside" data-role="button" data-icon="info"
+						class="ui-btn-right" data-iconpos="notext" data-rel="dialog"></a>
+					<div id="menuMobile"></div>
+				</div>
+				<!-- /Header -->
+
+				<div data-role="content">
+					<h3>Hebreus 1:3</h3>
+
+					<fieldset>
+						<legend>Texto Original:</legend>
+
+						<div>
+							<p style="font-size: 10pt;">
+								Ποιος είναι η <abbr rel="tooltip" title="Tradução: <em>Essa palavra quer dizer isso</em>.">φωτεινότητα</abbr> της δόξας του, και η
+								εικόνα ρητή του προσώπου του, και να προασπίσει τα πάντα με τον
+								λόγο της δύναμής του, όταν είχε ο ίδιος έκαμε καθαρισμόν των
+								αμαρτιών μας, κάθισε στα δεξιά της Αυτού Μεγαλειότητας για την
+								υψηλή
+							</p>
+						</div>
+
+					</fieldset>
+
+					<!-- For now mapping bean validation constraints from server side model is a manual task -->
+					<form name="reg" id="reg" data-ajax="false">
+						<fieldset>
+							<legend>Tradução:</legend>
+							<div>
+								<textarea rows="4" cols="40" style="font-size: 10pt;">O qual, sendo o resplendor da sua glória, e a expressa imagem da sua pessoa, e sustentando todas as coisas pela palavra do seu poder, havendo feito por si mesmo a purificação dos nossos pecados, assentou-se à destra da majestade nas alturas;
+								</textarea>
+							</div>
+
+							<div id="formMsgs"></div>
+							<div data-role="controlgroup" data-type="horizontal">
+								<input type="submit" id="register" value="Registrar" /> <input
+									type="button" name="cancel" id="cancel" value="Cancelar" />
+							</div>
+						</fieldset>
+					</form>
+
+				</div>
+
+				<!-- Footer -->
+				<div class="footer" data-role="footer" data-position="fixed">
+					<div class="footer_left">
+						<a href="home" data-role="button" data-icon="home">Home</a>
+					</div>
+					<div class="footer_right">
+						 <a href="#register-art"
+							data-role="button" data-icon="plus">Registrar</a> <a
+							href="#member-art" data-role="button" data-icon="grid">Listar</a>
+					</div>
+				</div>
+				<!-- /Footer -->
+			</article>
+
+			<!-- New HTML5 article tag -->
+			<article id="member-art" data-role="page" data-theme="a">
+				<!-- Header -->
+				<div data-role="header" class="header" data-position="fixed">
+					<img class="header_logo" src="images/favicon.ico" />
+					<h3>Lista de Traduções:</h3>
+					<a href="#info-aside" data-role="button" data-icon="info"
+						class="ui-btn-right" data-iconpos="notext" data-rel="dialog"></a>
+				</div>
+				<!-- /Header -->
+				
+				<div data-role="content">
+					<h2>Último Versículo Traduzido:</h2>
+					<a href="#">Hebreus 1:2</a>
+					<h2>Próxima Tradução:</h2>
+					<a href="#">Hebreus 1:4</a>
+				  	<br>
+					<button id="refreshButtonM" data-role="button" data-inline="true"
+						data-icon="refresh">Atualizar Traduções</button>
+				</div>
+
+					<!-- Footer -->
+				<div class="footer" data-role="footer" data-position="fixed">
+					<div class="footer_left">
+						<a href="home" data-role="button" data-icon="home">Home</a>
+					</div>
+					<div class="footer_right">
+						 <a href="#register-art"
+							data-role="button" data-icon="plus">Registrar</a> <a
+							href="#member-art" data-role="button" data-icon="grid">Listar</a>
+					</div>
+				</div>
+				<!-- /Footer -->
+			</article>
+
+			<!-- New HTML5 aside tag -->
+			<aside id="info-aside" data-role="page" data-theme="a">
+				<!-- Header -->
+				<div data-role="header">
+					<h3>Palavras com notas associadas encontradas no texto atual:</h3>
+				</div>
+				<!-- /Header -->
+
+				<div data-role="content">
+
+					<div onclick="abrefecha('divum');" style="padding-bottom: 10px;">
+
+						<strong>Μεγαλειότητας</strong>
+
+					</div>
+					<div id="divum" style="display: none; padding-bottom: 10px;">
+						<p>Teste para tradução das palavras encontradas no texto
+							atual!!!</p>
+						<ul>
+							<li>Texto 1</li>
+							<li>Texto 2</li>
+						</ul>
+					</div>
+					<div onclick="abrefecha('divdois');">
+
+						<strong>φωτεινότητα</strong>
+
+					</div>
+					<div id="divdois" style="display: none;"
+						style="padding-bottom: 10px;">
+						<p>Teste para tradução das palavras encontradas no texto
+							atual!!!</p>
+						<ul>
+							<li>teste um!!!!!!</li>
+							<li>Teste</li>
+						</ul>
+					</div>
+				</div>
+			</aside>
+		</section>
+
+		<!-- New HTML5 footer tag -->
+		<footer>
+			<!--<img src="images/logo.png" alt="HTML5"/>-->
+			<p>
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR"><img alt="Licença Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br />Este obra foi licenciado sob uma Licença <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons Atribuição-CompartilhaIgual 3.0 Não Adaptada</a>.
+			</p>
+		</footer>
+	</div>
+</body>
+
+</html>

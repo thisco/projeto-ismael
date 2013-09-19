@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.portalser</groupId>
+	<artifactId>sistrad</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<name>Projeto Ismael</name>
+	<description>Sistema para tradução</description>
+	<url>http://www.portalser.org/projetoismael</url>
+
+	<parent>
+		<groupId>br.gov.frameworkdemoiselle</groupId>
+		<artifactId>demoiselle-jsf-parent</artifactId>
+		<version>2.4.0-BETA3</version>
+	</parent>
+
+	<properties>
+		<!-- Explicitly declaring the source encoding eliminates the following 
+			message: -->
+		<!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
+			resources, i.e. build is platform dependent! -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- You can reference property in pom.xml or filtered resources (must 
+			enable third-party plugin if using Maven < 2.1) -->
+
+		<!-- JBoss dependency versions -->
+		<jboss.as.plugin.version>7.1.1.Final</jboss.as.plugin.version>
+		<!-- Define the version of the JBoss BOMs we want to import. The JBoss 
+			BOMs specify tested stacks. -->
+		<jboss.bom.version>1.0.1.Final</jboss.bom.version>
+
+		<version.org.jboss.spec.jboss.javaee.6.0>3.0.0.Final</version.org.jboss.spec.jboss.javaee.6.0>
+		<!-- JBoss EAP Certified Versions -->
+		<!-- <version.org.jboss.spec.jboss.javaee.6.0>3.0.0.Final-redhat-1</version.org.jboss.spec.jboss.javaee.6.0> -->
+		<!-- <version.org.hibernate.validator>4.2.0.Final-redhat-1</version.org.hibernate.validator> -->
+
+		<version.org.hibernate.validator>4.2.0.Final</version.org.hibernate.validator>
+
+
+		<!-- Other dependency versions -->
+		<version.junit>4.10</version.junit>
+		<version.org.eclipse.m2e>1.0.0</version.org.eclipse.m2e>
+		<version.ro.isdc.wro4j>1.4.4</version.ro.isdc.wro4j>
+
+		<!-- other plugin versions -->
+		<version.compiler.plugin>2.3.1</version.compiler.plugin>
+		<version.surefire.plugin>2.4.3</version.surefire.plugin>
+		<version.war.plugin>2.2</version.war.plugin>
+
+		<!-- maven-compiler-plugin -->
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<maven.compiler.source>1.6</maven.compiler.source>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- JBoss distributes a complete set of Java EE 6 APIs including a Bill 
+				of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection) 
+				of artifacts. We use this here so that we always get the correct versions 
+				of artifacts. Here we use the jboss-javaee-web-6.0 stack (you can read this 
+				as the JBoss stack of the Java EE Web Profile 6 APIs) -->
+			<dependency>
+				<groupId>org.jboss.spec</groupId>
+				<artifactId>jboss-javaee-web-6.0</artifactId>
+				<version>${version.org.jboss.spec.jboss.javaee.6.0}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jpa</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- If you are using a JTA transaction then use this extension -->
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jta</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- Import the JAX-RS API, we use provided scope as the API is included 
+			in JBoss -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ws.rs</groupId>
+			<artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>4.0.3</version>
+		</dependency>
+
+
+
+		<!-- Import the EJB API, we use provided scope as the API is included in 
+			JBoss -->
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- JSR-303 (Bean Validation) Implementation -->
+		<!-- Provides portable constraints such as @Email -->
+		<!-- Hibernate Validator is shipped in JBoss -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${version.org.hibernate.validator}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.1-901.jdbc4</version>
+			<scope>compile</scope>
+		</dependency>
+
+
+
+
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle.component</groupId>
+			<artifactId>demoiselle-junit</artifactId>
+			<version>2.3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- Maven will append the version to the finalName (which is the name 
+			given to the generated war, and hence the context root) -->
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<!-- Compiler plugin enforces Java 1.6 compatibility and activates annotation 
+				processors -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.compiler.plugin}</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<debug>true</debug>
+					<debuglevel>none</debuglevel>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${version.war.plugin}</version>
+				<configuration>
+					<!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<!-- The JBoss AS plugin deploys your war to a local JBoss AS container -->
+			<!-- To use, run: mvn package jboss-as:deploy -->
+			<plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<version>${jboss.as.plugin.version}</version>
+				<executions>
+
+					<!-- Undeploy the application on clean -->
+					<execution>
+						<id>undeploy</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>undeploy</goal>
+						</goals>
+						<configuration>
+							<ignoreMissingDeployment>true</ignoreMissingDeployment>
+						</configuration>
+					</execution>
+
+
+					<!-- Deploy the JDBC library -->
+					<execution>
+						<id>deploy-driver</id>
+						<phase>install</phase>
+						<configuration>
+							<groupId>postgresql</groupId>
+							<artifactId>postgresql</artifactId>
+							<name>postgresql.jar</name>
+						</configuration>
+						<goals>
+							<goal>deploy-artifact</goal>
+						</goals>
+					</execution>
+					<!-- Add an XA datasource -->
+					<execution>
+						<id>add-xa-datasource</id>
+						<phase>install</phase>
+						<configuration>
+							<address>subsystem=datasources</address>
+							<resources>
+								<resource>
+									<address>xa-data-source=java:jboss/datasources/PostgresDS</address>
+									<enableResource>true</enableResource>
+									<properties>
+										<xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+										<jndi-name>java:jboss/datasources/PostgresDS</jndi-name>
+										<enabled>true</enabled>
+										<pool-name>myPool</pool-name>
+										<driver-name>postgresql.jar</driver-name>
+									</properties>
+
+									<!-- Add the XA data source properties. The nested addresses will 
+										prepended the address above. -->
+									<resources>
+										<resource>
+											<address>
+												xa-datasource-properties=DatabaseName
+											</address>
+											<properties>
+												<value>sistrad</value>
+											</properties>
+										</resource>
+										<resource>
+											<address>
+												xa-datasource-properties=ServerName
+											</address>
+											<properties>
+												<value>localhost:5432</value>
+											</properties>
+										</resource>
+										<resource>
+											<address>
+												xa-datasource-properties=User
+											</address>
+											<properties>
+												<value>postgres</value>
+											</properties>
+										</resource>
+										<resource>
+											<address>
+												xa-datasource-properties=Password
+											</address>
+											<properties>
+												<value>postgres</value>
+											</properties>
+										</resource>
+									</resources>
+								</resource>
+							</resources>
+						</configuration>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+					</execution>
+
+
+					<!-- Deploy the application on install -->
+					<execution>
+						<id>deploy</id>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+
+
+			</plugin>
+
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<!-- The default profile skips all tests, though you can tune it to run 
+				just unit tests based on a custom pattern -->
+			<!-- Seperate profiles are provided for running all tests, including Arquillian 
+				tests that execute in the specified container -->
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${version.surefire.plugin}</version>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+
+		<profile>
+			<!-- Use this profile to use the wro4j plugin for validation, concatenation 
+				and -->
+			<!-- minification of JavaScript and CSS files during the build -->
+			<id>minify</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+
+			<build>
+				<pluginManagement>
+					<plugins>
+						<!--This plugin's configuration is used to store Eclipse m2e settings 
+							only. It has no influence on the Maven build itself. -->
+						<plugin>
+							<groupId>org.eclipse.m2e</groupId>
+							<artifactId>lifecycle-mapping</artifactId>
+							<version>${version.org.eclipse.m2e}</version>
+							<configuration>
+								<lifecycleMappingMetadata>
+									<pluginExecutions>
+										<pluginExecution>
+											<pluginExecutionFilter>
+												<groupId>ro.isdc.wro4j</groupId>
+												<artifactId>
+													wro4j-maven-plugin
+												</artifactId>
+												<version>${version.ro.isdc.wro4j}</version>
+												<goals>
+													<goal>run</goal>
+												</goals>
+											</pluginExecutionFilter>
+											<action>
+												<ignore></ignore>
+											</action>
+										</pluginExecution>
+									</pluginExecutions>
+								</lifecycleMappingMetadata>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+				<plugins>
+					<plugin>
+						<groupId>ro.isdc.wro4j</groupId>
+						<artifactId>wro4j-maven-plugin</artifactId>
+						<version>${version.ro.isdc.wro4j}</version>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<targetGroups>app.min,m.screen.min,d.screen.min</targetGroups>
+							<cssDestinationFolder>${project.build.directory}/${project.build.finalName}/css/</cssDestinationFolder>
+							<jsDestinationFolder>${project.build.directory}/${project.build.finalName}/js/</jsDestinationFolder>
+							<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${version.surefire.plugin}</version>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+	</profiles>
+
+</project>

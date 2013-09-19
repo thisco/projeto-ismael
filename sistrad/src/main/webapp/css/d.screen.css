@@ -1,0 +1,251 @@
+body {
+	background-color: #F1F1F1;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	color: #363636;
+	text-align: center;
+}
+
+#container {
+	text-align: left;
+	margin: 0 auto;
+	padding: 0 20px 10px 20px;
+	border-top: 5px solid #000000;
+	border-left: 5px solid #8c8f91;
+	border-right: 5px solid #8c8f91;
+	border-bottom: 25px solid #8c8f91;
+	width: 865px; /* subtract 40px from banner width for padding */
+	background: #FFFFFF;
+	background-image: url(../img/headerbkg.png);
+	background-repeat: repeat-x;
+	padding-top: 30px;
+	box-shadow: 3px 3px 15px #d5d5d5;
+}
+
+section {
+	clear: both;
+	float: left;
+	width: 500px;
+	margin: 20px;
+}
+
+article {
+	clear: both;
+}
+
+aside {
+	font-size: 0.9em;
+	width: 245px;
+	float: right;
+	margin: 20px 0;
+	border: 1px solid #D5D5D5;
+	background: #F1F1F1;
+	background-image: url(../img/asidebkg.png);
+	background-repeat: repeat-x;
+	padding: 20px;
+}
+
+aside ul {
+	padding-left: 20px;
+}
+
+.logo {
+	float: left;
+	padding-left: 10px;
+}
+
+.banner {
+	/* text-align: left;
+    margin: 0 auto;
+    height: 130px;
+    width: 825px auto;
+    padding-top: 0px;
+	background-image: url("../images/cropped-barra-novo-site3.jpg");
+	display: block;
+	*/
+	width: 825px auto; /* Largura fixa para a div */
+	min-height: 130px; /* Altura mínima */
+	height: auto !important;
+	/* Altura ajustável de acordo com o conteúdo */
+	height: 130px; /* Altura mínima para IE */
+	background-image: url("../images/cropped-barra-novo-site3.jpg");
+	/* Aqui vai a mesma imagem que usamos acima */
+	background-size: 100% 100%;
+	/* Imagem ocupando toda largura e altura da div */
+	-webkit-background-size: 100%;
+	-o-background-size: 100%;
+	-khtml-background-size: 100%;
+	-moz-background-size: 100% 100%;
+	padding-bottom: 0px;
+	margin: 0px;
+}
+
+.highlights {
+	width: 240px;
+	float: left;
+}
+
+.highlights ul {
+	margin-top: 0;
+}
+
+footer {
+	clear: both;
+	text-align: center;
+	color: #666666;
+	font-size: 0.85em;
+}
+
+a {
+	color: #4a5d75;
+}
+
+h1 {
+	color: #243446;
+	font-size: 2.25em;
+	margin: 0 0 10px 0;
+}
+
+h2 {
+	font-size: 1em;
+}
+
+h3 {
+	color: #243446;
+}
+
+/* Member registration styles */
+fieldset {
+	padding: 1em;
+	font: 80%/1 sans-serif;
+	width: 375px;
+	border: 1px solid #D5D5D5;
+}
+
+label {
+	float: left;
+	width: 15%;
+	margin-left: 20px;
+	margin-right: 0.5em;
+	padding-top: 0.2em;
+	text-align: right;
+	font-weight: bold;
+	color: #363636;
+}
+
+input {
+	margin-bottom: 8px;
+}
+
+legend {
+	padding: 0.2em 0.5em;
+	color: #4a5d75;
+	font-size: 1.5em;
+}
+
+#register {
+	float: left;
+	margin-left: 85px;
+}
+
+/* Responsive Styles */
+@media only screen and (max-width: 875px) {
+	#container {
+		width: 575px;
+	}
+	aside {
+		clear: both;
+		float: none;
+		width: 510px;
+		margin: 20px;
+	}
+}
+
+/* Hide Mobile Site Elements */
+.header,.footer,.mobileicon,#refreshButtonM,#features {
+	display: none;
+}
+
+.verso {
+	color: #111617;
+	font-family: 'Lora', serif;
+	font-size: 19px;
+	line-height: 23px;
+}
+
+.video-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 30px;
+	height: 0;
+	overflow: hidden;
+}
+
+.video-container iframe,.video-container object,.video-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Capitulo table styles */
+#capitulos .row .col:nth-child(1) {
+	width: 30px;
+}
+
+#capitulos .row .col:nth-child(4) {
+	width: 100px;
+}
+
+#capitulos .row .col:nth-child(5) {
+	width: 75px;
+}
+
+/* Using new CSS3 selectors for styling*/
+#capitulos>div:nth-child(odd) {
+	background: #f4f3f3;
+}
+
+#capitulos>div:nth-child(even) {
+	background: #ffffff;
+}
+
+#tooltip {
+	text-align: center;
+	color: #fff;
+	background: #111;
+	position: absolute;
+	z-index: 100;
+	padding: 15px;
+}
+
+#tooltip:after /* triangle decoration */ {
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #111;
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: -10px;
+	margin-left: -10px;
+}
+
+#tooltip.top:after {
+	border-top-color: transparent;
+	border-bottom: 10px solid #111;
+	top: -20px;
+	bottom: auto;
+}
+
+#tooltip.left:after {
+	left: 10px;
+	margin: 0;
+}
+
+#tooltip.right:after {
+	right: 10px;
+	left: auto;
+	margin: 0;
+}
