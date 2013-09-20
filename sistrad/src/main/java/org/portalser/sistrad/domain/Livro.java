@@ -8,9 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@Table(name = "tb_livro")
 @XmlRootElement
 public class Livro implements Serializable {
 
@@ -18,22 +20,23 @@ public class Livro implements Serializable {
 	
 	
 	@Id
+	@Column(name="id_livro")
 	@GeneratedValue(strategy = SEQUENCE)
 	private Long id;
 	
-	@Column
+	@Column(name="livro")
 	private String nome;
 	
-	@Column
+	@Column(name="capitulo")
 	private Long capitulo;
 	
-	@Column
+	@Column(name="versiculo")
 	private Long versiculo;
 	
-	@Column
+	@Column(name="texto_grego")
 	private String original;
 	
-	@Column
+	@Column(name="traducao")
 	private String traduzido;
 	
 	public String getOriginal() {
